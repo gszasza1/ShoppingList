@@ -20,17 +20,22 @@ export class NavMenu extends Component {
           <Nav>
             <LinkContainer to={'/'} exact>
               <NavItem>
-                <Glyphicon glyph='home' /> Home
+                <Glyphicon glyph='home' /> Főoldal
               </NavItem>
             </LinkContainer>
-            <LinkContainer to={'/counter'}>
+            <LinkContainer to={'/meals'}>
               <NavItem>
-                <Glyphicon glyph='education' /> Counter
+                <Glyphicon glyph='th-list' /> Ételek
               </NavItem>
             </LinkContainer>
-            <LinkContainer to={'/fetchdata'}>
+            <LinkContainer to={'/shoppinglists'}>
               <NavItem>
-                <Glyphicon glyph='th-list' /> Fetch data
+                <Glyphicon glyph='th-list' /> Bevásárlólisták
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to={'/peoples'}>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> Személyek
               </NavItem>
             </LinkContainer>
           </Nav>

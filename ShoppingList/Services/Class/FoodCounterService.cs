@@ -7,55 +7,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingList.Services
+namespace ShoppingList.Services.Class
 {
-    public class FoodService : IFoodInterface
+    public class FoodCounterService : IFoodCounterInterface
     {
         private readonly ShoppingListContext _context;
 
-        public FoodService(ShoppingListContext context)
+        public FoodCounterService(ShoppingListContext context)
         {
             _context = context;
         }
 
-        public Food GetFood(int foodId)
+        public FoodCounter GetFoodCounter(int foodId)
         {
-            return _context.Foods
+            return _context.FoodCounters
                 .SingleOrDefault(p => p.Id == foodId);
         }
 
-        public IEnumerable<Food> GetFoods()
+        public async Task<FoodCounter> InsertFoodCounterAsync(FoodCounter newFood)
         {
-            var products = _context.Foods
-                .ToList();
-
-            return products;
-        }
-
-        public async Task<Food> InsertFood(Food newFood)
-        {
-            _context.Foods.Add(newFood);
+            _context.FoodCounters.Add(newFood);
 
             await _context.SaveChangesAsync();
 
             return newFood;
         }
 
-        public async Task UpdateFoodAsync(Food updateFood)
+        public async Task UpdateFoodCounterAsync(FoodCounter updateFood)
         {
-            
+
             var entry = _context.Attach(updateFood);
             entry.State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteFoodAsync(int foodId)
+        public async Task DeleteFoodCounterAsync(int foodId)
         {
-            _context.Foods.Remove(new Food { Id = foodId });
+            _context.FoodCounters.Remove(new FoodCounter { Id = foodId });
 
             await _context.SaveChangesAsync();
 
         }
+
 
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace ShoppingList.Controllers
 
         // GET: api/Food
         [HttpGet]
-        public IEnumerable<Food> Get()
+        public async Task<IEnumerable<Food>> Get()
         {
           // var temp= _foodService.InsertFood(new Food() {Name= "kacsa",UnitPrice= 10 });
           // var a = new ArrayList();
@@ -34,27 +33,34 @@ namespace ShoppingList.Controllers
 
         // GET: api/Food/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public Food Get(int id)
         {
-            return "value";
+            return _foodService.GetFood(id);
         }
 
         // POST: api/Food
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<Food> Post([FromBody] Food newFood)
         {
+            var temp = await _foodService.InsertFood(newFood);
+            return temp;
         }
 
         // PUT: api/Food/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put([FromBody]  Food newFood)
         {
+            await _foodService.UpdateFoodAsync(newFood);
+            return NoContent();
+
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _foodService.DeleteFoodAsync(id);
+            return NoContent();
         }
     }
 }

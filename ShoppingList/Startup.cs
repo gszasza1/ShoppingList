@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ShoppingList.DBContext;
 using ShoppingList.Services;
+using ShoppingList.Services.Class;
 using ShoppingList.Services.Interface;
 
 namespace ShoppingList
@@ -34,8 +35,10 @@ namespace ShoppingList
             var connection = @"Server=(localdb)\mssqllocaldb;Database=ShoppingDatabase;Trusted_Connection=True;ConnectRetryCount=0;MultipleActiveResultSets = True";
             services.AddDbContext<ShoppingListContext>
                 (options => options.UseSqlServer(connection));
-
+            services.AddTransient<IBuyListInterface, BuyListService>();
             services.AddTransient<IFoodInterface, FoodService>();
+            services.AddTransient<IFoodCounterInterface, FoodCounterService>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

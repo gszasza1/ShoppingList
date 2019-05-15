@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Alert, Button, Form, FormGroup, Input, Label} from "reactstrap";
 
 export class Counter extends Component {
   displayName = Counter.name
@@ -18,9 +19,9 @@ export class Counter extends Component {
   render() {
     return (
       <div>
-        <h1>Counter</h1>
+        <h1>Étel kezelő</h1>
 
-        <p>This is a simple example of a React component.</p>
+       
 
         <p>Current count: <strong>{this.state.currentCount}</strong></p>
 

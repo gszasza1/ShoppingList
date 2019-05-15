@@ -9,7 +9,7 @@ namespace ShoppingList.Services.Interface
     public interface IFoodInterface
     {
         Food GetFood(int foodId);
-        Task UpdateFoodAsync(int productId, Food updatedProduct);
+        Task UpdateFoodAsync(Food updatedProduct);
         Task DeleteFoodAsync(int productId);
         IEnumerable<Food> GetFoods();
         Task<Food> InsertFood(Food newFood);
