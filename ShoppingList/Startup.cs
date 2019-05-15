@@ -1,3 +1,4 @@
+using AspNetCore.RouteAnalyzer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,7 @@ namespace ShoppingList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddRouteAnalyzer();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -60,6 +62,7 @@ namespace ShoppingList
 
             app.UseMvc(routes =>
             {
+                routes.MapRouteAnalyzer("/routes");
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");

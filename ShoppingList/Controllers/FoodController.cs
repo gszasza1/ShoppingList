@@ -47,7 +47,7 @@ namespace ShoppingList.Controllers
         }
 
         // PUT: api/Food/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]  Food newFood)
         {
             await _foodService.UpdateFoodAsync(newFood);
@@ -57,7 +57,7 @@ namespace ShoppingList.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Fooddisp(int id)
         {
             await _foodService.DeleteFoodAsync(id);
             return NoContent();
