@@ -40,7 +40,7 @@ namespace ShoppingList
             services.AddTransient<IBuyListInterface, BuyListService>();
             services.AddTransient<IFoodInterface, FoodService>();
             services.AddTransient<IFoodCounterInterface, FoodCounterService>();
-           
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +59,8 @@ namespace ShoppingList
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseSwagger();
+            app.UseSwaggerUi3();
             app.UseMvc(routes =>
             {
                 routes.MapRouteAnalyzer("/routes");
@@ -77,6 +78,7 @@ namespace ShoppingList
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+         
         }
     }
 }
