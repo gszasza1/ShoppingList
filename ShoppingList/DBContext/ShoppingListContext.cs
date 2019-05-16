@@ -38,7 +38,7 @@ namespace ShoppingList.DBContext
             .Property(b => b.Modification)
             .HasDefaultValue(DateTime.Now);
 
-           
+         
 
 
         }

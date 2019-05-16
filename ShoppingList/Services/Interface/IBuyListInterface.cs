@@ -12,5 +12,7 @@ namespace ShoppingList.Services.Interface
         Task UpdateBuyListAsync(BuyList updateBuyList);
         Task<BuyList> InsertBuyListAsync(BuyList newBuyList);
         BuyList GetBuyList(int buyListId);
+        IEnumerable<BuyList> GetBuyLists();
+        IEnumerable<BuyList> GetBuyListsDetails(int id);
     }
 }

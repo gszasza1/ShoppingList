@@ -12,5 +12,6 @@ namespace ShoppingList.Services.Interface
         Task UpdateFoodCounterAsync(FoodCounter updateFood);
         Task<FoodCounter> InsertFoodCounterAsync(FoodCounter newFood);
         FoodCounter GetFoodCounter(int foodId);
+        IEnumerable<FoodCounter> GetFoodCounterBuyListDetails(int buyListId);
     }
 }

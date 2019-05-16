@@ -26,6 +26,13 @@ namespace ShoppingList.Controllers
         {
             return new string[] { "value1", "value2" };
         }
+        // GET: api/FoodCounter
+        [HttpGet("[action]")]
+        public IEnumerable<FoodCounter> Buylistdetails(int id)
+        {
+           
+            return _foodCounterService.GetFoodCounterBuyListDetails(id);
+        }
 
         // GET: api/FoodCounter/5
         [HttpGet("{id}", Name = "GetFoodCounter")]
@@ -43,7 +50,7 @@ namespace ShoppingList.Controllers
         }
 
         // PUT: api/FoodCounter/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] FoodCounter value)
         {
             await _foodCounterService.UpdateFoodCounterAsync(value);

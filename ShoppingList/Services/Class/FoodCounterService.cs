@@ -24,6 +24,11 @@ namespace ShoppingList.Services.Class
                 .SingleOrDefault(p => p.Id == foodId);
         }
 
+        public IEnumerable<FoodCounter> GetFoodCounterBuyListDetails(int buyListId)
+        {
+            return _context.FoodCounters.Where(b => b.BuyListId.Equals(buyListId)).OrderBy(b => b.Counter).Include(p=>p.Foods).ToList();
+        }
+
         public async Task<FoodCounter> InsertFoodCounterAsync(FoodCounter newFood)
         {
             _context.FoodCounters.Add(newFood);

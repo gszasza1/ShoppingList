@@ -24,16 +24,16 @@ namespace ShoppingList.Controllers
 
         // GET: api/BuyList
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<BuyList> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _buyListInterface.GetBuyLists();
         }
 
         // GET: api/BuyList/5
         [HttpGet("{id}", Name = "GetBuyList")]
-        public BuyList Get(int id)
+        public IEnumerable<BuyList> Get(int id)
         {
-            return _buyListInterface.GetBuyList(id);
+            return _buyListInterface.GetBuyListsDetails(id);
         }
 
         // POST: api/BuyList

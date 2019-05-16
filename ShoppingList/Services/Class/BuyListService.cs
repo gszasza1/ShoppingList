@@ -23,6 +23,14 @@ namespace ShoppingList.Services.Class
             return _context.BuyList
                 .SingleOrDefault(p => p.Id == buyListId);
         }
+        public IEnumerable<BuyList> GetBuyLists()
+        {
+            return _context.BuyList.ToList();
+        }
+        public IEnumerable<BuyList> GetBuyListsDetails(int id)
+        {
+            return _context.BuyList.Include(p=>p.shoppingList).ThenInclude(po=>po.Foods);
+        }
 
         public async Task<BuyList> InsertBuyListAsync(BuyList newBuyList)
         {

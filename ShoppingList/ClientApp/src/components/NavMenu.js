@@ -33,6 +33,16 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Bevásárlólisták
               </NavItem>
             </LinkContainer>
+            <LinkContainer to={'/shoppinglistsoptions'}>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> Bevásárlólista opciók
+              </NavItem>
+            </LinkContainer>
+            <LinkContainer to={'/addfoodtolist'}>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> Étel felvétel listára
+              </NavItem>
+            </LinkContainer>
             <LinkContainer to={'/peoples'}>
               <NavItem>
                 <Glyphicon glyph='th-list' /> Személyek
