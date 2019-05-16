@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Form, FormGroup, Label } from "reactstrap";
+import { Form, FormGroup, Label } from "reactstrap";
 import "./Meals.css"
 import Select from "react-select";
 
@@ -12,14 +12,21 @@ class ListBuylists extends Component {
             item: null,
             items: [],
             mealUpdate: null,
-            FoodCounter:[],
+            FoodCounter: [],
+            total: "",
         };
         this.handleChange = this.handleChange.bind(this);
-     
+        this.totalnumber = this.totalnumber.bind(this);
         this.getdetails = this.getdetails.bind(this);
 
     }
-
+totalnumber(){
+    var totalSum=0;
+    for (var  i = 0; i < this.state.FoodCounter.length; i++) {
+        totalSum +=  this.state.FoodCounter[i].counter*this.state.FoodCounter[i].foods.unitPrice ;
+      }
+      this.setState({total:totalSum});
+}
     componentWillMount() {
 
         fetch("/api/BuyList")
@@ -37,14 +44,14 @@ class ListBuylists extends Component {
         this.setState({ item });
     }
 
-    getdetails(opt){
-        fetch("/api/FoodCounter/Buylistdetails?id="+opt.id)
-        .then((response) => response.json())
-        .then((FoodCounter) =>
-            this.setState({ FoodCounter }));
+    getdetails(opt) {
+        fetch("/api/FoodCounter/Buylistdetails?id=" + opt.id)
+            .then((response) => response.json())
+            .then((FoodCounter) =>
+                this.setState({ FoodCounter }, () => this.totalnumber()));
     }
 
-   
+
     render() {
 
         const { items } = this.state;
@@ -58,7 +65,7 @@ class ListBuylists extends Component {
                         <Label for="head">Étel neve:</Label>
                         <Select
                             className="extra_info change_lab"
-                            getOptionLabel={option => option.creator +" listája"}
+                            getOptionLabel={option => option.creator + " listája"}
                             getOptionValue={option => option.id}
                             options={items}
                             placeholder="Ételek"
@@ -79,10 +86,11 @@ class ListBuylists extends Component {
                         <p className="meals_strong"> Étel darabszám:</p>
                         <p className="meals_individualID"> {item.counter}</p>
                         <p className="meals_strong"> Teljes ár:</p>
-                        <p> {item.counter*item.foods.unitPrice}</p>
+                        <p> {item.counter * item.foods.unitPrice}</p>
                     </li>
-                    )}</ul>
 
+                    )}</ul>
+                <h1> Total: {this.state.total}</h1>
             </div>
         );
     }

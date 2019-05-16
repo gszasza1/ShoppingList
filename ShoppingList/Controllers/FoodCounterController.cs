@@ -53,6 +53,7 @@ namespace ShoppingList.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] FoodCounter value)
         {
+            value.Modification = DateTime.Now;
             await _foodCounterService.UpdateFoodCounterAsync(value);
             return NoContent();
 

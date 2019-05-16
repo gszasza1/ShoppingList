@@ -17,6 +17,7 @@ namespace ShoppingList.DBContext
         public DbSet<FoodCounter> FoodCounters { get; set; }
         public DbSet<FridgeList> FridgeList { get; set; }
         public DbSet<BuyList> BuyList { get; set; }
+        private DateTime localtime = DateTime.Now;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,7 +37,7 @@ namespace ShoppingList.DBContext
 
             modelBuilder.Entity<FoodCounter>()
             .Property(b => b.Modification)
-            .HasDefaultValue(DateTime.Now);
+            .HasDefaultValue(localtime);
 
          
 
