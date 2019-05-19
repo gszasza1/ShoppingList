@@ -11,8 +11,7 @@ namespace ShoppingList.Services.Interface
         Task DeleteBuyListAsync(int foodId);
         Task UpdateBuyListAsync(BuyList updateBuyList);
         Task<BuyList> InsertBuyListAsync(BuyList newBuyList);
-        BuyList GetBuyList(int buyListId);
-        IEnumerable<BuyList> GetBuyLists();
-        IEnumerable<BuyList> GetBuyListsDetails(int id);
+        Task<IEnumerable<BuyList>> GetBuyLists();
+        Task<IEnumerable<BuyList>> GetBuyListsDetails(int id);
     }
 }

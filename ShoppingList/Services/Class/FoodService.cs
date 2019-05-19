@@ -18,16 +18,16 @@ namespace ShoppingList.Services
             _context = context;
         }
 
-        public Food GetFood(int foodId)
+        public async Task<Food> GetFoodAsync(int foodId)
         {
-            return _context.Foods
-                .SingleOrDefault(p => p.Id == foodId);
+            return await _context.Foods
+                .SingleOrDefaultAsync(p => p.Id == foodId);
         }
 
-        public IEnumerable<Food> GetFoods()
+        public async Task<IEnumerable<Food>> GetFoodsAsync()
         {
-            var products = _context.Foods
-                .ToList();
+            var products = await _context.Foods
+                .ToListAsync();
 
             return products;
         }

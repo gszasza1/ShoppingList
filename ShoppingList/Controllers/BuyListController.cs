@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,32 +25,51 @@ namespace ShoppingList.Controllers
 
         // GET: api/BuyList
         [HttpGet]
-        public IEnumerable<BuyList> Get()
-        {
-            return _buyListInterface.GetBuyLists();
+        public async Task<IEnumerable<BuyList>> GetAsync()
+        {            
+            return await _buyListInterface.GetBuyLists(); 
+               
         }
 
         // GET: api/BuyList/5
         [HttpGet("{id}", Name = "GetBuyList")]
-        public IEnumerable<BuyList> Get(int id)
+        public async Task<IEnumerable<BuyList>> GetAsync(int id)
         {
-            return _buyListInterface.GetBuyListsDetails(id);
+            return await _buyListInterface.GetBuyListsDetails(id);
         }
 
         // POST: api/BuyList
         [HttpPost]
-        public async Task<BuyList> Post([FromBody] BuyList value)
+        public async Task<ActionResult<BuyList>> Post([FromBody] BuyList value)
         {
-            var temp = await _buyListInterface.InsertBuyListAsync(value);
-            return temp;
+            if (value == null)
+            {
+                return BadRequest();
+            }
+            await _buyListInterface.InsertBuyListAsync(value);
+            return CreatedAtAction(nameof(GetAsync), new { id = value.Id }, value); 
         }
 
         // PUT: api/BuyList/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody] BuyList value)
         {
-            await _buyListInterface.UpdateBuyListAsync(value);
-            return NoContent();
+            if (value == null)
+            {
+                return BadRequest();
+            }
+
+            
+            try
+            {
+                await _buyListInterface.UpdateBuyListAsync(value);
+                return RedirectToAction("BuyList", new { id = value.Id });
+            }
+            catch
+            {
+                string response = "Nem sikerült a változtatás";
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
 
         }
 
@@ -57,8 +77,13 @@ namespace ShoppingList.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            if (id == null || id<1 || id>int.MaxValue)
+            {
+                return BadRequest();
+            }
+
             await _buyListInterface.DeleteBuyListAsync(id);
-            return NoContent();
+            return Ok();
 
         }
     }

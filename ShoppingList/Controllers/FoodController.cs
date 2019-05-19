@@ -23,19 +23,15 @@ namespace ShoppingList.Controllers
 
         // GET: api/Food
         [HttpGet]
-        public async Task<IEnumerable<Food>> Get()
-        {
-          // var temp= _foodService.InsertFood(new Food() {Name= "kacsa",UnitPrice= 10 });
-          // var a = new ArrayList();
-           // a.Add(temp);
-            return _foodService.GetFoods();
-        }
+        public async Task<IEnumerable<Food>> Get() =>
+            
+            await _foodService.GetFoodsAsync();
 
         // GET: api/Food/5
         [HttpGet("{id}", Name = "Get")]
-        public Food Get(int id)
+        public async Task<Food> GetAsync(int id)
         {
-            return _foodService.GetFood(id);
+            return await _foodService.GetFoodAsync(id);
         }
 
         // POST: api/Food
@@ -50,8 +46,21 @@ namespace ShoppingList.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]  Food newFood)
         {
-            await _foodService.UpdateFoodAsync(newFood);
-            return NoContent();
+            if (newFood == null)
+            {
+                return BadRequest();
+            }
+
+           try
+            {
+                await _foodService.UpdateFoodAsync(newFood);
+                return RedirectToAction("Food", new { id = newFood.Id });
+            }
+            catch
+            {
+                string response = "Nem sikerült a változtatás";
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
 
         }
 
@@ -59,8 +68,13 @@ namespace ShoppingList.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Fooddisp(int id)
         {
+            if (id == null || id < 1 || id > int.MaxValue)
+            {
+                return BadRequest();
+            }
+
             await _foodService.DeleteFoodAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

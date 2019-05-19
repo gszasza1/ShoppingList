@@ -1,4 +1,5 @@
 using AspNetCore.RouteAnalyzer;
+using Hellang.Middleware.SpaFallback;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,7 @@ namespace ShoppingList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSpaFallback();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddRouteAnalyzer();
 
@@ -56,6 +58,7 @@ namespace ShoppingList
                 app.UseHsts();
             }
 
+            app.UseSpaFallback();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

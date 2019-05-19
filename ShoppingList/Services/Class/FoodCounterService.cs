@@ -18,15 +18,15 @@ namespace ShoppingList.Services.Class
             _context = context;
         }
 
-        public FoodCounter GetFoodCounter(int foodId)
+        public async Task<FoodCounter> GetFoodCounterAsync(int foodId)
         {
-            return _context.FoodCounters
-                .SingleOrDefault(p => p.Id == foodId);
+            return await _context.FoodCounters
+                .SingleOrDefaultAsync(p => p.Id == foodId);
         }
 
-        public IEnumerable<FoodCounter> GetFoodCounterBuyListDetails(int buyListId)
+        public async Task<IEnumerable<FoodCounter>> GetFoodCounterBuyListDetailsAsync(int buyListId)
         {
-            return _context.FoodCounters.Where(b => b.BuyListId.Equals(buyListId)).OrderBy(b => b.Counter).Include(p=>p.Foods).ToList();
+            return await _context.FoodCounters.Where(b => b.BuyListId.Equals(buyListId)).OrderBy(b => b.Counter).Include(p=>p.Foods).ToListAsync();
         }
 
         public async Task<FoodCounter> InsertFoodCounterAsync(FoodCounter newFood)

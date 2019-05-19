@@ -28,17 +28,17 @@ namespace ShoppingList.Controllers
         }
         // GET: api/FoodCounter
         [HttpGet("[action]")]
-        public IEnumerable<FoodCounter> Buylistdetails(int id)
+        public async Task<IEnumerable<FoodCounter>> BuylistdetailsAsync(int id)
         {
            
-            return _foodCounterService.GetFoodCounterBuyListDetails(id);
+            return await _foodCounterService.GetFoodCounterBuyListDetailsAsync(id);
         }
 
         // GET: api/FoodCounter/5
         [HttpGet("{id}", Name = "GetFoodCounter")]
-        public FoodCounter Get(int id)
+        public async Task<FoodCounter> GetAsync(int id)
         {
-            return _foodCounterService.GetFoodCounter(id);
+            return await _foodCounterService.GetFoodCounterAsync(id);
         }
 
         // POST: api/FoodCounter

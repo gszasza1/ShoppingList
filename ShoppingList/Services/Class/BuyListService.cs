@@ -18,18 +18,18 @@ namespace ShoppingList.Services.Class
             _context = context;
         }
 
-        public BuyList GetBuyList(int buyListId)
+        public async Task<BuyList> GetBuyListAsync(int buyListId)
         {
-            return _context.BuyList
-                .SingleOrDefault(p => p.Id == buyListId);
+            return await _context.BuyList
+                .SingleOrDefaultAsync(p => p.Id == buyListId);
         }
-        public IEnumerable<BuyList> GetBuyLists()
+        public async Task<IEnumerable<BuyList>> GetBuyLists()
         {
-            return _context.BuyList.ToList();
+            return await _context.BuyList.ToListAsync();
         }
-        public IEnumerable<BuyList> GetBuyListsDetails(int id)
+        public async Task<IEnumerable<BuyList>> GetBuyListsDetails(int id)
         {
-            return _context.BuyList.Include(p=>p.shoppingList).ThenInclude(po=>po.Foods);
+            return await _context.BuyList.Include(p=>p.shoppingList).ThenInclude(po=>po.Foods).ToListAsync();
         }
 
         public async Task<BuyList> InsertBuyListAsync(BuyList newBuyList)
@@ -49,9 +49,11 @@ namespace ShoppingList.Services.Class
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBuyListAsync(int foodId)
+        public async Task DeleteBuyListAsync(int buyListId)
         {
-            _context.BuyList.Remove(new BuyList { Id = foodId });
+            _context.BuyList.Remove(new BuyList { Id = buyListId });
+            var removeCounter = _context.FoodCounters.Where(p => p.BuyListId.Equals(buyListId));
+            _context.FoodCounters.RemoveRange(removeCounter);
 
             await _context.SaveChangesAsync();
 
