@@ -3,9 +3,10 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
-import  ListBuyLists from './components/ListBuyLists';
-import  BuyListOptions from './components/BuyListOptions';
+import  Foods from './components/1_Foods';
+import  FoodComment from './components/2_Foods_Comment';
+import  ListBuyLists from './components/3_Buylist';
+import  BuyListOptions from './components/4_BuyListOptions';
 import  AddFoodBuyList from './components/AddFoodBuyList';
 
 export default class App extends Component {
@@ -15,7 +16,8 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/meals' component={Counter} />
+        <Route path='/meals' component={Foods} />
+        <Route path='/mealsoptions' component={FoodComment} />
         <Route path='/shoppinglists' component={ListBuyLists} />
         <Route path='/shoppinglistsoptions' component={BuyListOptions} />
         <Route path='/addfoodtolist' component={AddFoodBuyList} />

@@ -22,7 +22,58 @@ export class Home extends Component {
           <li><strong>Services</strong>. Kezeli az adatbázist, és modelleket</li>
           <li><strong>Controllers</strong>. Kliens oldalról érkező kéréseket fogadja, feldolgozza. Servicesen keresztül kommunikál adatbázissal.</li>
         </ul>
-       
+        <h3>Mik vannak benne a követelményből:</h3>
+        <ul className="ulstyled">
+          <li>
+          Web API Core által alapból nem támogatott HTTP ige implementálása
+          <ul className="ulstyled_2">
+            <li >
+            pl. GET-hez hasonló működés <strong>5</strong>
+            </li>
+          </ul>
+          </li>
+          verziókezelt API
+          <ul className="ulstyled_2">
+            <li >
+            nem HTTP header (pl. URL szegmens) alapján <strong> 7</strong> NEED
+            </li>
+          </ul>
+          <li>
+          Publikálás docker konténerbe és futtatás konténerből <strong> 7</strong> NEED
+          </li>
+          <li>
+             Table splitting  <strong>5</strong>
+          </li>
+          <li>
+          adatbázis index konfigurációja az EF modellben <strong>3</strong>
+          </li>
+          <li>
+          birtokolt típus (owned type) használata <strong>3</strong>
+          </li>
+          <li>
+          értékkonverter (value converter) alkalmazása EF Core leképezésben
+          <ul className="ulstyled_2">
+            <li >
+            beépített value converter <strong>3</strong>
+            </li>
+          </ul>
+          </li>
+          <li>
+          Optimista konkurenciakezelés 
+          <ul className="ulstyled_2">
+            <li >
+            ütközésdetektálás és automatikus ütközésfeloldás <strong>5</strong>
+            </li>
+          </ul>
+          </li>
+          <li>
+          logikai törlés (soft delete) globális szűrőkkel (Global Query Filter) <strong>5</strong>
+          </li>
+          <li>
+          külső osztálykönyvtár használata<strong> 7</strong>
+          </li>
+        </ul>
+<h3>Total:50</h3>
       </div>
     );
   }

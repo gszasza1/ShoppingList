@@ -65,7 +65,7 @@ totalnumber(){
                         <Label for="head">Étel neve:</Label>
                         <Select
                             className="extra_info change_lab"
-                            getOptionLabel={option => option.creator + " listája"}
+                            getOptionLabel={option => option.creationBuylist.creator + " listája.   Készítés ideje: " + option.creationBuylist.orderDate }
                             getOptionValue={option => option.id}
                             options={items}
                             placeholder="Ételek"

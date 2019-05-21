@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
-import "./Meals.css"
+import "../Meals.css"
 
 class AddMeal extends Component {
 

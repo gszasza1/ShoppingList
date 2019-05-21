@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
 import "./Meals.css"
-import UpdateMeal from './UpdateMeal'
-import AddMeal from './AddMeal'
-import DeleteMeal from './DeleteMeal'
+import UpdateMeal from './1_Foods/UpdateMeal'
+import AddMeal from './1_Foods/AddMeal'
+import DeleteMeal from './1_Foods/DeleteMeal'
 
-export class Counter extends Component {
-  displayName = Counter.name
+class Foods extends Component {
+  displayName = Foods.name
 
   constructor(props) {
     super(props);
@@ -81,3 +81,4 @@ export class Counter extends Component {
     );
   }
 }
+export default Foods;

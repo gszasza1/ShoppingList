@@ -14,18 +14,19 @@ namespace ShoppingList.DBContext
         public ShoppingListContext(DbContextOptions<ShoppingListContext> options)
             : base(options)
         { }
-       
+
         public DbSet<Food> Foods { get; set; }
         public DbSet<FoodCounter> FoodCounters { get; set; }
         public DbSet<BuyList> BuyList { get; set; }
-        public DbSet<Messages> Messages { get; set; }
-        private DateTime localtime = DateTime.Now;
+        public DbSet<FoodMessageRating> FoodMessageRating { get; set; }
+        public DbSet<Rating> Rating { get; set; }
+        private readonly DateTime Localtime = DateTime.Now;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
-          
+
         }
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -59,7 +60,7 @@ namespace ShoppingList.DBContext
                 switch (entry.State)
                 {
                     case EntityState.Modified:
-                        entry.CurrentValues["Modification"] = localtime;
+                        entry.CurrentValues["Modification"] = Localtime;
                         break;
 
                 }
@@ -94,6 +95,8 @@ namespace ShoppingList.DBContext
             .Property(f => f.Id)
             .ValueGeneratedOnAdd();
 
+            
+
             modelBuilder.Entity<FoodCounter>()
             .Property(f => f.Id)
             .ValueGeneratedOnAdd();
@@ -104,7 +107,7 @@ namespace ShoppingList.DBContext
 
             modelBuilder.Entity<FoodCounter>()
             .Property(b => b.Modification)
-            .HasDefaultValue(localtime);
+            .HasDefaultValue(Localtime);
 
             modelBuilder.Entity<Food>()
             .Property(e => e.Category)
@@ -125,6 +128,21 @@ namespace ShoppingList.DBContext
                 .ValueGeneratedOnAddOrUpdate()
                 .IsConcurrencyToken();
 
+            modelBuilder.Entity<FoodMessageRating>().HasOne(x => x.Rating)
+                .WithOne(x => x.FoodMessageRating)
+                .HasForeignKey<Rating>(x => x.Id);
+
+            modelBuilder.Entity<Rating>().ToTable("FoodMessageRating");
+            modelBuilder.Entity<FoodMessageRating>().HasOne(x => x.Messages)
+                .WithOne(x => x.FoodMessageRating)
+                .HasForeignKey<Messages>(x => x.Id);
+
+            modelBuilder.Entity<Messages>().ToTable("FoodMessageRating");
+
+            modelBuilder.Entity<Food>()
+                .HasIndex(b => b.UnitPrice);
+
+            modelBuilder.Entity<BuyList>().OwnsOne(p => p.CreationBuylist);
 
         }
 

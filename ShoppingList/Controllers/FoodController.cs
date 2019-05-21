@@ -34,6 +34,13 @@ namespace ShoppingList.Controllers
             return await _foodService.GetFoodAsync(id);
         }
 
+        // GET: api/Food/5
+        [HttpGet("[action]/{id}")]
+        public async Task<IEnumerable<Food>> more(int id)
+        {
+            return await _foodService.GetFoodMoreThansAsync(id);
+        }
+
         // POST: api/Food
         [HttpPost]
         public async Task<Food> Post([FromBody] Food newFood)

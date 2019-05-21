@@ -12,7 +12,13 @@ ul {
 h1{
     margin-bottom: 50px;
 }
-
+.ulstyled>*{
+    list-style-type: circle;
+}
+.ulstyled_2>*{
+    list-style-type: circle;
+    margin-left: 20px;
+}
 
 li {
     list-style-type: none;

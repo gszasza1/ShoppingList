@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingList.DBContext;
 
 namespace ShoppingList.Migrations
 {
     [DbContext(typeof(ShoppingListContext))]
-    partial class ShoppingListContextModelSnapshot : ModelSnapshot
+    [Migration("20190520181440_new")]
+    partial class @new
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,7 +27,11 @@ namespace ShoppingList.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Creator");
+
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime>("OrderDate");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -59,8 +65,6 @@ namespace ShoppingList.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UnitPrice");
-
                     b.ToTable("Foods");
                 });
 
@@ -78,7 +82,7 @@ namespace ShoppingList.Migrations
 
                     b.Property<DateTime>("Modification")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2019, 5, 21, 21, 47, 9, 283, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2019, 5, 20, 20, 14, 39, 823, DateTimeKind.Local));
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -135,27 +139,6 @@ namespace ShoppingList.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FoodMessageRating");
-                });
-
-            modelBuilder.Entity("ShoppingList.Models.BuyList", b =>
-                {
-                    b.OwnsOne("ShoppingList.Models.CreationBuylist", "CreationBuylist", b1 =>
-                        {
-                            b1.Property<int>("BuyListId")
-                                .ValueGeneratedOnAdd()
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("Creator");
-
-                            b1.Property<DateTime>("OrderDate");
-
-                            b1.ToTable("BuyList");
-
-                            b1.HasOne("ShoppingList.Models.BuyList")
-                                .WithOne("CreationBuylist")
-                                .HasForeignKey("ShoppingList.Models.CreationBuylist", "BuyListId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 
             modelBuilder.Entity("ShoppingList.Models.FoodCounter", b =>

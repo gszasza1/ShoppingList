@@ -24,10 +24,10 @@ namespace ShoppingList.Models
 
     public enum Categorys
     {
-        Drink,
-        Meal,
-        Sweets,
-        Others
+        Drink=1,
+        Meal=2,
+        Sweets=4,
+        Others=8
 
     }
 }

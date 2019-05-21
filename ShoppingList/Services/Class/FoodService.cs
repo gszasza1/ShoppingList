@@ -32,6 +32,15 @@ namespace ShoppingList.Services
             return products;
         }
 
+        public async Task<IEnumerable<Food>> GetFoodMoreThansAsync(int value)
+        {
+            var products = await _context.Foods
+                .Where(p => p.UnitPrice >= value)
+                .ToListAsync();
+
+            return products;
+        }
+
         public async Task<Food> InsertFood(Food newFood)
         {
             _context.Foods.Add(newFood);

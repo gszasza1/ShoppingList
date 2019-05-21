@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
-import "./Meals.css"
+import "../Meals.css"
 import Select from "react-select";
 
-class DeleteMeal extends Component {
+class UpdateMeal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             currentCount: 0,
-            item: null,
+            item: "",
             items: [],
             mealUpdate:null,
         };
@@ -37,15 +37,19 @@ class DeleteMeal extends Component {
 
     async handleSubmit(ev) {
         ev.preventDefault();
-        
-        fetch("/api/Food/"+this.state.mealUpdate.id, {
-            method: "DELETE",
+        let newMeal = {
+            id: this.state.mealUpdate.id,
+            name: this.state.mealUpdate.name,
+            unitPrice: this.state.item.Price
+            };
+        fetch("/api/Food", {
+            method: "PUT",
             headers: {"Content-Type": "application/json"},
-           // body: JSON.stringify(newMeal)
+            body: JSON.stringify(newMeal)
         });
     }
     render() {
-     
+        const { item } = this.state;
         const { items } = this.state;
         return (
 
@@ -59,14 +63,21 @@ class DeleteMeal extends Component {
                         options={items}
                         placeholder="Ételek"
                         onChange={opt => this.setState({
-                        mealUpdate: opt
+                            mealUpdate: opt
                         })}
+                    />
+                </FormGroup>
+
+                <FormGroup>
+                    <Label for="head">Ára:</Label>
+                    <Input className="newsP_title" type="number" name="Price" id="Price"
+                        value={item.Price || ""} onChange={this.handleChange}
                     />
                 </FormGroup>
 
                 <FormGroup id="buttonFrom">
                     <Button variant={"success"} color="primary"
-                        type="submit">Törlés</Button>
+                        type="submit">Feltöltés</Button>
                 </FormGroup>
 
             </Form>
@@ -74,4 +85,4 @@ class DeleteMeal extends Component {
         );
     }
 }
-export default DeleteMeal;
+export default UpdateMeal;

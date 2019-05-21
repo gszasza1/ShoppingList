@@ -13,5 +13,6 @@ namespace ShoppingList.Services.Interface
         Task DeleteFoodAsync(int productId);
         Task<IEnumerable<Food>> GetFoodsAsync();
         Task<Food> InsertFood(Food newFood);
+        Task<IEnumerable<Food>> GetFoodMoreThansAsync(int value);
     }
 }

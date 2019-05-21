@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
-import "./Meals.css"
+import "../Meals.css"
 import Select from "react-select";
 
 class ModifyBuyList extends Component {
@@ -10,7 +10,7 @@ class ModifyBuyList extends Component {
         this.state = {
             items: [],
             item: "",
-            modMeal:null,
+            modMeal: null,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,15 +36,17 @@ class ModifyBuyList extends Component {
 
     async handleSubmit(ev) {
         ev.preventDefault();
-       let newBuyList={
-           id:this.state.modMeal.id,
-           creator:this.state.item.name,
-           orderDate:this.state.modMeal.orderDate,
-       }
-        fetch("/api/BuyList/"+this.state.modMeal.id, {
+        let newBuyList = {
+            id: this.state.modMeal.id,
+            CreationBuylist: {
+                creator: this.state.item.name,
+                orderDate: this.state.modMeal.orderDate,
+            }
+        }
+        fetch("/api/BuyList/" + this.state.modMeal.id, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(newBuyList)
+            body: JSON.stringify(newBuyList)
         });
     }
 
@@ -53,13 +55,13 @@ class ModifyBuyList extends Component {
         const { item } = this.state;
         const { items } = this.state;
         return (
-          
-             
+
+            <div><h3>Bevásárló lista módosítása</h3>
                 <Form onSubmit={this.handleSubmit} className="meals_add">
                     <FormGroup>
                         <Label for="head">Lista neve:</Label>
                         <Select
-                            
+
                             getOptionLabel={option => option.creator + " listája"}
                             getOptionValue={option => option.id}
                             options={items}
@@ -71,11 +73,11 @@ class ModifyBuyList extends Component {
                     </FormGroup>
                     <FormGroup>
                         <Label for="head">Készítő új neve:</Label>
-                        
-                         <Input type="text" name="name" id="name"
+
+                        <Input type="text" name="name" id="name"
                             value={item.name || ""} onChange={this.handleChange}
                         />
-                   </FormGroup>
+                    </FormGroup>
 
                     <FormGroup id="buttonFrom">
                         <Button variant={"success"} color="primary"
@@ -83,8 +85,8 @@ class ModifyBuyList extends Component {
                     </FormGroup>
 
                 </Form>
-                
-        
+
+            </div>
         );
     }
 }

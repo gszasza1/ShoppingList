@@ -42,6 +42,7 @@ namespace ShoppingList
             services.AddTransient<IBuyListInterface, BuyListService>();
             services.AddTransient<IFoodInterface, FoodService>();
             services.AddTransient<IFoodCounterInterface, FoodCounterService>();
+            services.AddTransient<IRatingMessageInterface, RatingMessageService>();
             services.AddSwaggerDocument();
         }
 

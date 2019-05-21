@@ -9,9 +9,8 @@ namespace ShoppingList.Models
     public class BuyList
     {
         public int Id { get; set; }
-        public DateTime OrderDate { get; set; }
-        public string Creator { get; set; }
         public ICollection<FoodCounter> shoppingList { get; } = new List<FoodCounter>();
+        public CreationBuylist CreationBuylist { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
