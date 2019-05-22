@@ -8,6 +8,7 @@ class UpdateMeal extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            numb:0,
             currentCount: 0,
             item: "",
             items: [],
@@ -15,7 +16,8 @@ class UpdateMeal extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.reloadState = this.reloadState.bind(this);
+     
     }
 
     componentWillMount() {
@@ -34,6 +36,16 @@ class UpdateMeal extends Component {
         item[name] = value;
         this.setState({ item });
     }
+    reloadState(opt){
+       this.setState({mealUpdate:opt});
+            
+        fetch("/api/Food")
+        .then((response) => response.json())
+        .then((items) =>
+            this.setState({ items }));
+           
+        }
+    
 
     async handleSubmit(ev) {
         ev.preventDefault();
@@ -62,9 +74,7 @@ class UpdateMeal extends Component {
                         getOptionValue={option => option.id}
                         options={items}
                         placeholder="Ételek"
-                        onChange={opt => this.setState({
-                            mealUpdate: opt
-                        })}
+                        onChange={opt => this.reloadState(opt)}
                     />
                 </FormGroup>
 

@@ -19,9 +19,32 @@ h1{
     list-style-type: circle;
     margin-left: 20px;
 }
-
+.meals_messages{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+}
+.options_asd{
+    display: flex;
+    flex-direction: row;
+}
+.options_asd>*{
+    margin: 5px;
+}
 li {
     list-style-type: none;
+}
+.meals_messages_individualText{
+    flex: 1;
+}
+.meals_messages_strong_v2{
+    width: 300px;
+    font-style: italic;
+}
+.meals_messages_strong{
+    width: 50px;
+    font-weight: bold;
 }
 .meals_flex{
     display: flex;

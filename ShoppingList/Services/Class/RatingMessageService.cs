@@ -58,6 +58,8 @@ namespace ShoppingList.Services.Class
         {
             return await _context.FoodMessageRating
                 .Include(p => p.Messages)
+                .Include(p => p.Rating)
+                .Include(ps => ps.Foods)
                 .Where(p => p.Rating.Stars >= foodId).ToListAsync();
         }
 

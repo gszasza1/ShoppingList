@@ -105,6 +105,10 @@ namespace ShoppingList.DBContext
             .Property(f => f.Id)
             .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<FoodMessageRating>()
+            .Property(f => f.Id)
+            .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<FoodCounter>()
             .Property(b => b.Modification)
             .HasDefaultValue(Localtime);

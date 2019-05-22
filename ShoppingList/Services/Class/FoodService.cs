@@ -52,7 +52,7 @@ namespace ShoppingList.Services
 
         public async Task UpdateFoodAsync(Food updateFood)
         {
-            
+
             var entry = _context.Attach(updateFood);
             entry.State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -60,10 +60,24 @@ namespace ShoppingList.Services
 
         public async Task DeleteFoodAsync(int foodId)
         {
-            _context.Foods.Remove(new Food { Id = foodId });
 
-            await _context.SaveChangesAsync();
+            var temp = _context.Foods.FirstOrDefault(x => x.Id == foodId);
+                 
 
+            if (temp != null)
+            {
+                _context.Foods.Remove(temp);
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Entity not found");
+                }
+
+            }
+  
         }
 
     }

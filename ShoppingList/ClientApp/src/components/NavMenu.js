@@ -28,6 +28,11 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Ételek
               </NavItem>
             </LinkContainer>
+            <LinkContainer to={'/mealsmessage'}>
+              <NavItem>
+                <Glyphicon glyph='th-list' /> Étel értékelés
+              </NavItem>
+            </LinkContainer>
             <LinkContainer to={'/mealsoptions'}>
               <NavItem>
                 <Glyphicon glyph='th-list' /> Étel opciók

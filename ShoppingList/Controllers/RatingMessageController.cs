@@ -53,8 +53,8 @@ namespace ShoppingList.Controllers
             return await _ratingMessageService.GetTopMessagesAsync(id);
         }
 
-        [HttpGet("{id}/count", Name = "GetTotalRating")]
-        public async Task<int> GetTotalRatingAsync(int id)
+        [HttpGet("[action]")]
+        public async Task<int> count()
         {
            return await _ratingMessageService.GetTotalRatingAsync();
         }

@@ -12,24 +12,27 @@ class FoodComment extends Component {
             item: null,
             items: [],
             mealUpdate: null,
-            FoodCounter: [],
+            Messages: [],
             total: "",
+            Rating: [],
+            SingleMessage:{
+               messages:"" ,
+               rating:"",
+            }
         };
         this.handleChange = this.handleChange.bind(this);
-        this.totalnumber = this.totalnumber.bind(this);
         this.getdetails = this.getdetails.bind(this);
+        this.getallMessageData = this.getallMessageData.bind(this);
 
     }
-totalnumber(){
-    var totalSum=0;
-    for (var  i = 0; i < this.state.FoodCounter.length; i++) {
-        totalSum +=  this.state.FoodCounter[i].counter*this.state.FoodCounter[i].foods.unitPrice ;
-      }
-      this.setState({total:totalSum});
-}
     componentWillMount() {
 
-        fetch("/api/BuyList")
+        fetch("/api/RatingMessage/count")
+            .then((response) => response.json())
+            .then((total) =>
+                this.setState({ total }));
+
+        fetch("/api/Food")
             .then((response) => response.json())
             .then((items) =>
                 this.setState({ items }));
@@ -43,29 +46,44 @@ totalnumber(){
         item[name] = value;
         this.setState({ item });
     }
+   async getallMessageData(opt) {
+        fetch("/api/RatingMessage/" + opt.id)
+            .then((response) => response.json())
+            .then((SingleMessage) =>
+                this.setState({ SingleMessage }));
+    }
 
     getdetails(opt) {
-        fetch("/api/FoodCounter/Buylistdetails?id=" + opt.id)
+        fetch("/api/RatingMessage/" + opt.id + "/messages")
             .then((response) => response.json())
-            .then((FoodCounter) =>
-                this.setState({ FoodCounter }, () => this.totalnumber()));
+            .then((Messages) =>
+                this.setState({ Messages }));
+
+        fetch("/api/RatingMessage/" + opt.id + "/rating")
+            .then((response) => response.json())
+            .then((Rating) =>
+                this.setState({ Rating }));
     }
 
 
     render() {
 
         const { items } = this.state;
-        const { FoodCounter } = this.state;
+        const { total } = this.state;
+        const { Messages } = this.state;
+        const { SingleMessage } = this.state;
+        const { Rating } = this.state;
         return (
             <div>
-                <h1>Bevásárlólisták</h1>
+                <h1>Étel értékelések</h1>
+                <h3>Összes eddigi értékelés: {total}</h3>
                 <h3>Kérlek válassz egyet listázáshoz</h3>
                 <Form>
                     <FormGroup>
                         <Label for="head">Étel neve:</Label>
                         <Select
-                            className="extra_info change_lab"
-                            getOptionLabel={option => option.creator + " listája"}
+
+                            getOptionLabel={option => option.name}
                             getOptionValue={option => option.id}
                             options={items}
                             placeholder="Ételek"
@@ -74,23 +92,56 @@ totalnumber(){
                     </FormGroup>
 
                 </Form>
+                <Form>
+                    <FormGroup>
+                        <Label for="head">Teljes koment:</Label>
+                        <Select
+
+                            getOptionLabel={option => option.id}
+                            getOptionValue={option => option.id}
+                            options={Messages}
+                            placeholder="Ételek"
+                            onChange={opt => this.getallMessageData(opt)}
+                        />
+                    </FormGroup>
+
+                </Form>
+                <div className="options_asd">
+                    <p>
+                         Sorszám: {SingleMessage.id}
+                    </p>
+                    <p>
+                        Üzenet: {SingleMessage.messages.text}
+                    </p>
+                    
+                    <p>
+                       Értékelés:  {SingleMessage.rating.stars}
+                    </p>
+                    <p>
+                       Dátum:  {SingleMessage.creation}
+                    </p>
+                </div>
+               
+                <h3>Üzenetek</h3>
                 <ul >
-                    <h3>Összes étel</h3>
-                    {FoodCounter.map(item => <li className="meals_flex">
-                        <p className="meals_strong"> Étel ID:</p>
-                        <p className="meals_individualID"> {item.foods.id}</p>
-                        <p className="meals_strong"> Étel neve:</p>
-                        <p> {item.foods.name}</p>
-                        <p className="meals_strong"> Étel egységára:</p>
-                        <p> {item.foods.unitPrice}</p>
-                        <p className="meals_strong"> Étel darabszám:</p>
-                        <p className="meals_individualID"> {item.counter}</p>
-                        <p className="meals_strong"> Teljes ár:</p>
-                        <p> {item.counter * item.foods.unitPrice}</p>
+
+                    {Messages.map(item => <li className="meals_messages">
+                        <p className="meals_messages_strong"> {item.messages.id}. </p>
+                        <p className="meals_messages_strong_v2"> {item.creation}</p>
+                        <p className="meals_messages_individualText"> {item.messages.text}</p>
                     </li>
 
                     )}</ul>
-                <h1> Total: {this.state.total}</h1>
+                <h3>Összes csillag</h3>
+                <ul >
+
+                    {Rating.map(item => <li className="meals_messages">
+                        <p className="meals_messages_strong"> {item.rating.id}. </p>
+                        <p className="meals_messages_individualText"> {item.rating.stars}</p>
+                    </li>
+
+                    )}</ul>
+
             </div>
         );
     }

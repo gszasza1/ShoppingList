@@ -15,7 +15,13 @@ class DeleteMeal extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.reloadState = this.reloadState.bind(this);
+    }
+    reloadState(){
+        fetch("/api/Food")
+        .then((response) => response.json())
+        .then((items) =>
+            this.setState({ items }));
     }
 
     componentWillMount() {
@@ -57,6 +63,7 @@ class DeleteMeal extends Component {
                         getOptionLabel={option => option.name}
                         getOptionValue={option => option.id}
                         options={items}
+                       // onMenuOpen={this.reloadState()}
                         placeholder="Ételek"
                         onChange={opt => this.setState({
                         mealUpdate: opt

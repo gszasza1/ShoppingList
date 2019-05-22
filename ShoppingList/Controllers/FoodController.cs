@@ -18,13 +18,13 @@ namespace ShoppingList.Controllers
         public FoodController(IFoodInterface foodService)
         {
             _foodService = foodService;
-          
+
         }
 
         // GET: api/Food
         [HttpGet]
         public async Task<IEnumerable<Food>> Get() =>
-            
+
             await _foodService.GetFoodsAsync();
 
         // GET: api/Food/5
@@ -58,7 +58,7 @@ namespace ShoppingList.Controllers
                 return BadRequest();
             }
 
-           try
+            try
             {
                 await _foodService.UpdateFoodAsync(newFood);
                 return RedirectToAction("Food", new { id = newFood.Id });
@@ -79,8 +79,14 @@ namespace ShoppingList.Controllers
             {
                 return BadRequest();
             }
-
-            await _foodService.DeleteFoodAsync(id);
+            try
+            {
+                await _foodService.DeleteFoodAsync(id);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
     }

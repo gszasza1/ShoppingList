@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using ShoppingList.DBContext;
 using ShoppingList.Services;
 using ShoppingList.Services.Class;
@@ -28,7 +29,10 @@ namespace ShoppingList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSpaFallback();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(
+                    json => json.SerializerSettings.ReferenceLoopHandling
+                            = ReferenceLoopHandling.Ignore);
             services.AddRouteAnalyzer();
 
             // In production, the React files will be served from this directory
