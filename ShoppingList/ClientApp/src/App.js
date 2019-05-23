@@ -8,6 +8,7 @@ import  ListBuyLists from './components/3_Buylist';
 import  BuyListOptions from './components/4_BuyListOptions';
 import  AddFoodBuyList from './components/5_AddFoodBuyList';
 import  FoodMessages from './components/2_Food_Message';
+import  PriceFood from './components/6_Other_Foods';
 
 export default class App extends Component {
   displayName = App.name
@@ -22,6 +23,7 @@ export default class App extends Component {
         <Route path='/shoppinglists' component={ListBuyLists} />
         <Route path='/shoppinglistsoptions' component={BuyListOptions} />
         <Route path='/addfoodtolist' component={AddFoodBuyList} />
+        <Route path='/price' component={PriceFood} />
       </Layout>
     );
   }

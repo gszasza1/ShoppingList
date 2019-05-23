@@ -12,7 +12,10 @@ class ListBuylists extends Component {
             item: null,
             items: [],
             mealUpdate: null,
-            FoodCounter: [],
+            FoodCounter: [{
+                foods:{id:"",name:"",unitprice:0},
+                counter:0
+                }],
             total: "",
         };
         this.handleChange = this.handleChange.bind(this);
@@ -29,7 +32,11 @@ totalnumber(){
 }
     componentWillMount() {
 
-        fetch("/api/BuyList")
+        fetch("/api/BuyList", { 
+            method: 'get', 
+            headers: new Headers({
+              "api-version":1.0
+            })})
             .then((response) => response.json())
             .then((items) =>
                 this.setState({ items }));

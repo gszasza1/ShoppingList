@@ -95,7 +95,7 @@ namespace ShoppingList.DBContext
             .Property(f => f.Id)
             .ValueGeneratedOnAdd();
 
-            
+
 
             modelBuilder.Entity<FoodCounter>()
             .Property(f => f.Id)
@@ -147,6 +147,13 @@ namespace ShoppingList.DBContext
                 .HasIndex(b => b.UnitPrice);
 
             modelBuilder.Entity<BuyList>().OwnsOne(p => p.CreationBuylist);
+
+            modelBuilder
+        .Entity<Food>()
+        .Property(e => e.Category)
+        .HasConversion(
+            v => v.ToString(),
+            v => (Categorys)Enum.Parse(typeof(Categorys), v));
 
         }
 

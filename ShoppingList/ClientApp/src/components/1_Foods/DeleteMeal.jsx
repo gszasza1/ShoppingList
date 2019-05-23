@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Label } from "reactstrap";
 import "../Meals.css"
 import Select from "react-select";
 

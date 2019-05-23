@@ -53,9 +53,9 @@ export class NavMenu extends Component {
                 <Glyphicon glyph='th-list' /> Étel felvétel listára
               </NavItem>
             </LinkContainer>
-            <LinkContainer to={'/peoples'}>
+            <LinkContainer to={'/price'}>
               <NavItem>
-                <Glyphicon glyph='th-list' /> Személyek
+                <Glyphicon glyph='th-list' /> Drágább ételek
               </NavItem>
             </LinkContainer>
           </Nav>

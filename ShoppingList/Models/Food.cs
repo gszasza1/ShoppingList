@@ -18,7 +18,7 @@ namespace ShoppingList.Models
         [Column(TypeName = "nvarchar(24)")]
         public Categorys Category { get; set; }
 
-        [Timestamp]
+        
         public byte[] RowVersion { get; set; }
     }
 

@@ -9,6 +9,7 @@ using ShoppingList.Services.Interface;
 
 namespace ShoppingList.Controllers
 {
+   /* [ApiVersion("2.0")]*/
     [Route("api/[controller]")]
     [ApiController]
     public class FoodCounterController : ControllerBase
@@ -20,42 +21,79 @@ namespace ShoppingList.Controllers
             _foodCounterService = foodCounterService;
 
         }
-        // GET: api/FoodCounter
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+
         // GET: api/FoodCounter
         [HttpGet("[action]")]
-        public async Task<IEnumerable<FoodCounter>> BuylistdetailsAsync(int id)
+        public async Task<ActionResult<IEnumerable<FoodCounter>>> Buylistdetails(int id)
         {
-           
-            return await _foodCounterService.GetFoodCounterBuyListDetailsAsync(id);
+
+            try
+            {
+                var temp = await _foodCounterService.GetFoodCounterBuyListDetailsAsync(id);
+                return Ok(temp);
+            }
+
+            catch (InvalidOperationException)
+            {
+                return BadRequest("Nem lehetett lekérni");
+            }
         }
 
         // GET: api/FoodCounter/5
         [HttpGet("{id}", Name = "GetFoodCounter")]
-        public async Task<FoodCounter> GetAsync(int id)
+        public async Task<ActionResult<FoodCounter>> GetAsync(int id)
         {
-            return await _foodCounterService.GetFoodCounterAsync(id);
+            try
+            {
+                return await _foodCounterService.GetFoodCounterAsync(id);
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest("Nem lehetett lekérni");
+            }
+
+
         }
 
         // POST: api/FoodCounter
         [HttpPost]
-        public async Task<FoodCounter> Post([FromBody] FoodCounter value)
+        public async Task<ActionResult<FoodCounter>> Post([FromBody] FoodCounter value)
         {
-            var temp = await _foodCounterService.InsertFoodCounterAsync(value);
-            return temp;
+            if (value == null)
+            {
+                return BadRequest("Üres paraméter");
+            }
+            try
+            {
+                var temp = await _foodCounterService.InsertFoodCounterAsync(value);
+                return Ok(temp);
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest("Sikertelen beszúrás");
+            }
         }
 
         // PUT: api/FoodCounter/5
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] FoodCounter value)
         {
-            value.Modification = DateTime.Now;
-            await _foodCounterService.UpdateFoodCounterAsync(value);
-            return NoContent();
+            if (value == null)
+            {
+                return BadRequest("Üres paraméter");
+            }
+
+            try
+            {
+                value.Modification = DateTime.Now;
+                await _foodCounterService.UpdateFoodCounterAsync(value);
+                return RedirectToAction("Food", new { id = value.Id });
+            }
+            catch
+            {
+                string response = "Nem sikerült a változtatás";
+                return StatusCode(StatusCodes.Status500InternalServerError, response);
+            }
 
         }
 
@@ -63,8 +101,20 @@ namespace ShoppingList.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _foodCounterService.DeleteFoodCounterAsync(id);
-            return NoContent();
+
+            if (id < 1 || id > int.MaxValue)
+            {
+                return BadRequest("Rossz ID");
+            }
+            try
+            {
+                await _foodCounterService.DeleteFoodCounterAsync(id);
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest("Nincs ilyen Entitás");
+            }
+            return Ok("Törlés kész");
 
         }
     }

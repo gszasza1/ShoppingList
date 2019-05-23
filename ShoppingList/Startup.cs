@@ -4,15 +4,20 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using NJsonSchema;
+using NSwag.AspNetCore;
+using NSwag.SwaggerGeneration.Processors;
 using ShoppingList.DBContext;
 using ShoppingList.Services;
 using ShoppingList.Services.Class;
 using ShoppingList.Services.Interface;
+using System.Reflection;
 
 namespace ShoppingList
 {
@@ -33,6 +38,13 @@ namespace ShoppingList
                 .AddJsonOptions(
                     json => json.SerializerSettings.ReferenceLoopHandling
                             = ReferenceLoopHandling.Ignore);
+           
+           /* services.AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                options.ReportApiVersions = true;
+            });*/
             services.AddRouteAnalyzer();
 
             // In production, the React files will be served from this directory
@@ -48,6 +60,7 @@ namespace ShoppingList
             services.AddTransient<IFoodCounterInterface, FoodCounterService>();
             services.AddTransient<IRatingMessageInterface, RatingMessageService>();
             services.AddSwaggerDocument();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +81,7 @@ namespace ShoppingList
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseSwagger();
+            
             app.UseSwaggerUi3();
             app.UseMvc(routes =>
             {

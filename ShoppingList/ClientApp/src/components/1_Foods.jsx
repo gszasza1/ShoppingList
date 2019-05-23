@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
 import "./Meals.css"
 import UpdateMeal from './1_Foods/UpdateMeal'
 import AddMeal from './1_Foods/AddMeal'

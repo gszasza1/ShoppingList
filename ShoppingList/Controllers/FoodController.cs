@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShoppingList.Models;
 using ShoppingList.Services.Interface;
 
 namespace ShoppingList.Controllers
 {
+ 
     [Route("api/[controller]")]
     [ApiController]
     public class FoodController : ControllerBase
@@ -23,15 +25,36 @@ namespace ShoppingList.Controllers
 
         // GET: api/Food
         [HttpGet]
-        public async Task<IEnumerable<Food>> Get() =>
+        public async Task<ActionResult<IEnumerable<Food>>> Get()
+        {
+            try
+            {
+             var temp =   await _foodService.GetFoodsAsync();
+                return Ok(temp);
+            }
 
-            await _foodService.GetFoodsAsync();
+            catch (InvalidOperationException)
+            {
+                return BadRequest("nem lehetett lekérni");
+            }
 
+
+        }
         // GET: api/Food/5
         [HttpGet("{id}", Name = "Get")]
-        public async Task<Food> GetAsync(int id)
+        public async Task<ActionResult<Food>> GetAsync(int id)
         {
-            return await _foodService.GetFoodAsync(id);
+            
+            try
+            {
+                var temp =  await _foodService.GetFoodAsync(id);
+                return Ok(temp);
+            }
+
+            catch (InvalidOperationException)
+            {
+                return BadRequest("nem lehetett lekérni");
+            }
         }
 
         // GET: api/Food/5
@@ -43,10 +66,24 @@ namespace ShoppingList.Controllers
 
         // POST: api/Food
         [HttpPost]
-        public async Task<Food> Post([FromBody] Food newFood)
+        public async Task<ActionResult<Food>> Post([FromBody] Food newFood)
         {
-            var temp = await _foodService.InsertFood(newFood);
-            return temp;
+            try
+            {
+                var temp = await _foodService.InsertFood(newFood);
+                return Ok(temp);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("Nincs ilyen Entitás");
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest("Adatbázis hiba");
+            }
+
+
+
         }
 
         // PUT: api/Food/5
@@ -55,13 +92,13 @@ namespace ShoppingList.Controllers
         {
             if (newFood == null)
             {
-                return BadRequest();
+                return BadRequest("Üres paraméter");
             }
 
             try
             {
                 await _foodService.UpdateFoodAsync(newFood);
-                return RedirectToAction("Food", new { id = newFood.Id });
+                return Ok("Változás történt");
             }
             catch
             {
@@ -77,17 +114,22 @@ namespace ShoppingList.Controllers
         {
             if (id == null || id < 1 || id > int.MaxValue)
             {
-                return BadRequest();
+                return BadRequest("Rossz ID");
             }
             try
             {
                 await _foodService.DeleteFoodAsync(id);
+                return Ok("Törlés kész");
             }
-            catch (InvalidOperationException e)
+            catch (DbUpdateConcurrencyException)
             {
-                return BadRequest();
+                return BadRequest("Nincs ilyen Entitás");
             }
-            return Ok();
+            catch(InvalidOperationException)
+            {
+                return BadRequest("Adatbázis hiba");
+            }
+            
         }
     }
 }

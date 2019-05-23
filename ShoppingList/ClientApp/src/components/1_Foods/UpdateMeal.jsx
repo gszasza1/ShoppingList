@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
+import {Button, Form, FormGroup, Input, Label } from "reactstrap";
 import "../Meals.css"
 import Select from "react-select";
 
@@ -52,7 +52,9 @@ class UpdateMeal extends Component {
         let newMeal = {
             id: this.state.mealUpdate.id,
             name: this.state.mealUpdate.name,
-            unitPrice: this.state.item.Price
+            unitPrice: this.state.item.Price,
+            rowVersion:this.state.mealUpdate.rowVersion,
+            category:this.state.mealUpdate.category,
             };
         fetch("/api/Food", {
             method: "PUT",
