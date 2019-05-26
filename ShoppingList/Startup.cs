@@ -52,7 +52,7 @@ namespace ShoppingList
             {
                 configuration.RootPath = "ClientApp/build";
             });
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ShoppingDatabase;Trusted_Connection=True;ConnectRetryCount=0;MultipleActiveResultSets = True";
+            var connection = @"Server=tcp:shoppinglistv2dbserver.database.windows.net,1433;Initial Catalog=ShopdddpingDatabases;Persist Security Info=False;User ID=gszasza1;Password=GEMAszasza1997;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddDbContext<ShoppingListContext>
                 (options => options.UseSqlServer(connection));
             services.AddTransient<IBuyListInterface, BuyListService>();
@@ -62,7 +62,8 @@ namespace ShoppingList
             services.AddSwaggerDocument();
             
         }
-
+        //Server=tcp:shoppinglistv2dbserver.database.windows.net,1433;Initial Catalog=ShopdddpingDatabases;Persist Security Info=False;User ID={gszasza1};Password={GEMAszasza1997};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+        //Server=(localdb)\mssqllocaldb;Database=ShoppingDatabase;Trusted_Connection=True;ConnectRetryCount=0;MultipleActiveResultSets = True
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

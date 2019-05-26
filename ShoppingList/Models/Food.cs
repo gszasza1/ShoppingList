@@ -13,6 +13,7 @@ namespace ShoppingList.Models
         [StringLength(200, ErrorMessage = "Name length fault.")]
         public string Name { get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "Unit price must be higher than 0.")]
+
         public int UnitPrice { get; set; }
 
         [Column(TypeName = "nvarchar(24)")]

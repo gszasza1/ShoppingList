@@ -67,13 +67,21 @@ export class Home extends Component {
           </ul>
           </li>
           <li>
+          hosztolás külső szolgáltatónál 
+          <ul className="ulstyled_2">
+            <li >
+            Windows Azure <strong>7</strong>
+            </li>
+          </ul>
+          </li>
+          <li>
           logikai törlés (soft delete) globális szűrőkkel (Global Query Filter) <strong>5</strong>
           </li>
           <li>
           külső osztálykönyvtár használata<strong> 7</strong>
           </li>
         </ul>
-<h3>Total:50</h3>
+<h3>Total:57</h3>
       </div>
     );
   }
